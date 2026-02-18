@@ -1,0 +1,15 @@
+gitGraph
+    commit id: "User writes note"
+    commit id: "User clicks Save"
+    commit id: "Browser prevents default submit"
+    commit id: "Create note object (content + date)"
+    commit id: "Update UI immediately"
+    branch server
+    checkout server
+    commit id: "POST /new_notes_spa (JSON)"
+    commit id: "Parse JSON body"
+    commit id: "Save new note"
+    commit id: "201 Created response"
+    checkout main
+    merge server
+    commit id: "Browser confirms save (no reload)"
