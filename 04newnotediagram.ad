@@ -1,27 +1,32 @@
 
+ classDiagram
 
-Person(user, "User", "Writes and saves notes")
-
-System_Boundary(system, "Notes Application") {
-
-    Container(browser, "Web Browser", "JavaScript, HTML, CSS", "Executes client-side code")
-    Container(server, "Server", "Node.js / Backend", "Serves HTML, CSS, JS and JSON data")
-
+class User {
+    +addNote()
+    +clickSave()
 }
 
-Rel(user, browser, "Writes notes and clicks save")
+class Browser {
+    +sendPostRequest()
+    +sendGetRequest()
+    +reloadPage()
+}
 
-Rel(browser, server, "GET /notes", "HTTP")
-Rel(server, browser, "Returns HTML")
+class Server {
+    +saveNote()
+    +redirect()
+    +returnCSS()
+    +returnJS()
+    +returnJSON()
+}
 
-Rel(browser, server, "GET /main.css", "HTTP")
-Rel(server, browser, "Returns CSS")
+class Note {
+    +id
+    +content
+    +timestamp
+}
 
-Rel(browser, server, "GET /main.js", "HTTP")
-Rel(server, browser, "Returns JavaScript")
-
-Rel(browser, server, "GET /data.json", "HTTP")
-Rel(server, browser, "Returns JSON notes data")
-
-@enduml
+User --> Browser : uses
+Browser --> Server : sends HTTP requests
+Server --> Note : creates/saves
 
