@@ -1,33 +1,28 @@
-```mermaid
-sequenceDiagram
-    participant browser
-    participant server
-    participant User
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-    User->>Browser: writes notes
-    User->>Browser: clicks save
+Person(user, "User", "Writes and saves notes")
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
-    activate server
-    server-->>browser: HTML document
-    deactivate server
+System_Boundary(system, "Notes Application") {
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    activate server
-    server-->>browser: the css file
-    deactivate server
+    Container(browser, "Web Browser", "JavaScript, HTML, CSS", "Executes client-side code")
+    Container(server, "Server", "Node.js / Backend", "Serves HTML, CSS, JS and JSON data")
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    activate server
-    server-->>browser: the JavaScript file
-    deactivate server
+}
 
-    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+Rel(user, browser, "Writes notes and clicks save")
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate server
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
-    deactivate server
+Rel(browser, server, "GET /notes", "HTTP")
+Rel(server, browser, "Returns HTML")
 
-    Note right of browser: The browser executes the callback function that renders the notes
-```
+Rel(browser, server, "GET /main.css", "HTTP")
+Rel(server, browser, "Returns CSS")
+
+Rel(browser, server, "GET /main.js", "HTTP")
+Rel(server, browser, "Returns JavaScript")
+
+Rel(browser, server, "GET /data.json", "HTTP")
+Rel(server, browser, "Returns JSON notes data")
+
+@enduml
+
