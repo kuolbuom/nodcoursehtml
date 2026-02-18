@@ -1,0 +1,15 @@
+mindmap
+  root((SPA Page Load Flow))
+    User Action
+      Navigate to /spa
+    Browser
+      Send HTTP GET request
+      Load HTML
+      Request main.js
+      Execute JavaScript
+      Request data.json
+      Render notes dynamically
+    Server
+      Return HTML document
+      Return JavaScript file
+      Return notes as JSON
